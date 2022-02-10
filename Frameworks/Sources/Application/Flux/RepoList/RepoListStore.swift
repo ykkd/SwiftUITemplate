@@ -51,6 +51,7 @@ public final class RepoListStore: ObservableObject {
   extension RepoListStore {
     public static var mock: Self {
       let mockStore = Self.init(dispatcher: .init())
+      mockStore.inputText = "mock input"
       mockStore.repoAggregateRoot = .mock
       return mockStore
     }

@@ -8,6 +8,7 @@
 
 import Application
 import SwiftUI
+import CoreMedia
 
 public struct RepoListView: View {
   @ObservedObject private var store: RepoListStore
@@ -15,12 +16,23 @@ public struct RepoListView: View {
   @Injected(\.repoListActionCreatorProvider)
   private var actionCreator: RepoListActionCreatorProviding
 
+  @State
+  private var isShown = false
+  
   public init(store: RepoListStore = .shared) {
     self.store = store
   }
 
   public var body: some View {
-    Text("RepoListView")
+    List {
+      ForEach([$store.inputText.wrappedValue], id: \.self) { text in
+        Button(text) {
+          isShown = true
+        }
+      }
+    }.alert(isPresented: $isShown) { () -> Alert in
+      Alert(title: Text("alert"), message: Text("message"))
+    }
   }
 }
 
